@@ -1,99 +1,109 @@
 package Bit::Manip;
 
-use 5.006;
+use warnings;
 use strict;
-use warnings FATAL => 'all';
-
-=head1 NAME
-
-Bit::Manip - The great new Bit::Manip!
-
-=head1 VERSION
-
-Version 0.01
-
-=cut
 
 our $VERSION = '0.01';
 
+require XSLoader;
+XSLoader::load('Bit::Manip', $VERSION);
+
+use Exporter qw(import);
+
+our @EXPORT_OK = qw(bit_count bit_get bit_set bit_clear bit_toggle);
+our %EXPORT_TAGS;
+$EXPORT_TAGS{all} = [@EXPORT_OK];
+
+sub bit_count {
+    my ($n, $set) = @_;
+
+    if (! defined $n || $n !~ /^\d+/){
+        die "bit_count() requires an integer param\n";
+    }
+
+    $set = 0 if ! defined $set;
+
+    return _bit_count($n, $set);
+}
+sub bit_get {
+    my ($data, $first, $last) = @_;
+
+    $last = 0 if ! defined $last;
+
+    _bit_get($data, $first, $last);
+}
+sub bit_set {
+    my ($data, $first, $value) = @_;
+    _bit_set($data, $first, $value);
+}
+
+1;
+__END__
+
+=head1 NAME
+
+Bit::Manip - Routines to aid in bit manipulation
 
 =head1 SYNOPSIS
 
-Quick summary of what the module does.
+=head1 DESCRIPTION
 
-Perhaps a little code snippet.
+Provides functions to aid in bit manipulation (set, unset, toggle, shifting)
+etc. Particularly useful for embedded programming and writing device
+communication software.
 
-    use Bit::Manip;
+=head1 EXPORT_OK
 
-    my $foo = Bit::Manip->new();
-    ...
+=head1 FUNCTIONS
 
-=head1 EXPORT
+=head2 bit_count
 
-A list of functions that can be exported.  You can delete this section
-if you don't export anything, such as for a purely object-oriented module.
+Returns either the total count of bits in a number, or just the number of set
+bits (if the C<$set>, parameter is sent in and is true).
 
-=head1 SUBROUTINES/METHODS
+Parameters:
 
-=head2 function1
+    $num
 
-=cut
+Mandatory: Unsigned integer, the number to retrieve the total number of bits
+for. For example, if you send in C<15>, the total number of bits would be C<4>,
+likewise, for C<255>, the number of bits would be C<16>.
 
-sub function1 {
-}
+    $set
 
-=head2 function2
+Optional: Integer. If this is sent and is a true value, we'll return the number
+of *set* bits only. For example, for C<255>, the set bits will be C<8> (ie. all
+of them), and for C<8>, the return will be C<1> (as only the MSB is set out of
+all four of the total).
 
-=cut
+=head2 bit_get
 
-sub function2 {
-}
+Retrieves the value of specified bits within a bit string.
+
+Parameters:
+
+    $data
+
+Mandatory: Integer, the bit string you want to send in. Eg: C<255> for
+C<11111111> (or C<0xFF>).
+
+    $first
+
+Mandatory: Integer, the Most Significant Bit (leftmost) of the group of bits to
+collect the value for (starting from 0 from the right, so with C<1000>, so you'd
+send in C<3> as the start parameter for the bit set to C<1>). Must be C<1>
+
+    $last
+
+Optional: Integer, the Least Significant Bit (rightmost) of the group of bits to
+collect the value for (starting at 0 from the right). A value of C<0> means
+return the value from C<$first> through to the very end of the bit string. A
+value of C<1> will capture from C<$first> through to bit C<1> (second from
+right). This value must be lower than C<$first>.
 
 =head1 AUTHOR
 
 Steve Bertrand, C<< <steveb at cpan.org> >>
-
-=head1 BUGS
-
-Please report any bugs or feature requests to C<bug-bit-manip at rt.cpan.org>, or through
-the web interface at L<http://rt.cpan.org/NoAuth/ReportBug.html?Queue=Bit-Manip>.  I will be notified, and then you'll
-automatically be notified of progress on your bug as I make changes.
-
-
-
-
-=head1 SUPPORT
-
-You can find documentation for this module with the perldoc command.
-
-    perldoc Bit::Manip
-
-
-You can also look for information at:
-
-=over 4
-
-=item * RT: CPAN's request tracker (report bugs here)
-
-L<http://rt.cpan.org/NoAuth/Bugs.html?Dist=Bit-Manip>
-
-=item * AnnoCPAN: Annotated CPAN documentation
-
-L<http://annocpan.org/dist/Bit-Manip>
-
-=item * CPAN Ratings
-
-L<http://cpanratings.perl.org/d/Bit-Manip>
-
-=item * Search CPAN
-
-L<http://search.cpan.org/dist/Bit-Manip/>
-
-=back
-
-
-=head1 ACKNOWLEDGEMENTS
-
 
 =head1 LICENSE AND COPYRIGHT
 
@@ -104,8 +114,3 @@ under the terms of either: the GNU General Public License as published
 by the Free Software Foundation; or the Artistic License.
 
 See L<http://dev.perl.org/licenses/> for more information.
-
-
-=cut
-
-1; # End of Bit::Manip
