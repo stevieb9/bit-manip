@@ -45,6 +45,9 @@ say "bit 3";
 $x = bit_set(128, 3, 0b11);
 printf("%d: %b\n", $x, $x);
 
+$x = bit_set(128, 3, 0b111);
+printf("%d: %b\n", $x, $x);
+
 $x = bit_set(255, 0, 0b0);
 printf("%d: %b\n", $x, $x);
 
