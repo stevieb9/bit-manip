@@ -11,7 +11,7 @@
 
 int  _bit_count (unsigned int value, int set);
 int  _bit_get (const unsigned int data, int first, const int last);
-int  _bit_set (unsigned int data, int first, int value);
+int  _bit_set (unsigned int data, int lsb, int value);
 
 void  __check_first(int first);
 void __check_last(int first, int last);
@@ -40,6 +40,7 @@ int _bit_count (unsigned int value, int set){
 }
 
 int _bit_get (const unsigned int data, int first, const int last){
+
     __check_first(first);
     first++; // we count from 1
 
@@ -48,18 +49,14 @@ int _bit_get (const unsigned int data, int first, const int last){
     return (data & (int)pow(MULT, first)-1) >> last;
 }
 
-int _bit_set (unsigned int data, int first, int value){
-    __check_first(first);
+int _bit_set (unsigned int data, int lsb, int value){
+
     __check_value(value);
 
     unsigned int shift_bits = _bit_count(value, 0);
-
-    //if (shift_bits > first)
-        //croak("bit_set() $value param can't be larger than $first param\n");
-
-    unsigned int mask = ((int)pow(MULT, shift_bits) - 1) << first;
-
-    data = (data & (~mask)) | (value << first);
+    unsigned int mask = ((int)pow(MULT, shift_bits) - 1) << lsb;
+    
+    data = (data & (~mask)) | (value << lsb);
 
     return data;
 }

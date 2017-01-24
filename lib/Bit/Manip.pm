@@ -33,8 +33,8 @@ sub bit_get {
     _bit_get($data, $first, $last);
 }
 sub bit_set {
-    my ($data, $first, $value) = @_;
-    _bit_set($data, $first, $value);
+    my ($data, $lsb, $value) = @_;
+    _bit_set($data, $lsb, $value);
 }
 
 1;
