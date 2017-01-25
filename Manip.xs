@@ -90,8 +90,8 @@ void __check_lsb (int msb, int lsb){
     if (lsb < 0)
         croak("\nbit_get() $lsb param can not be negative\n\n");
 
-    if (lsb + 1 >= (msb))
-        croak("\nbit_get() $lsb param must be less than $msb\n\n");
+    if (lsb + 1 > (msb))
+        croak("\nbit_get() $lsb param must be less than or equal to $msb\n\n");
 }
 
 void __check_value (int value){

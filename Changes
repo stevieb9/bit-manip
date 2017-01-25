@@ -2,6 +2,7 @@ Revision history for Bit-Manip
 
 1.00 UNREL
         - removed string.h include as we don't use it
+        - LSB can now be equal to MSB to allow getting a single bit
 
 0.02    2017-01-25
         - added in EXPORT_OK POD section
