@@ -51,8 +51,8 @@ sub bit_get {
     _bit_get($data, $msb, $lsb);
 }
 sub bit_set {
-    my ($data, $lsb, $value) = @_;
-    return _bit_set($data, $lsb, $value);
+    my ($data, $lsb, $bits, $value) = @_;
+    return _bit_set($data, $lsb, $bits, $value);
 }
 sub bit_toggle {
     my ($data, $bit) = @_;

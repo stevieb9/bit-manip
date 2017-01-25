@@ -12,7 +12,7 @@
 int _bit_count (unsigned int value, int set);
 int _bit_mask (unsigned int bits, int lsb);
 int _bit_get (const unsigned int data, int msb, const int lsb);
-int _bit_set (unsigned int data, int lsb, int value);
+int _bit_set (unsigned int data, int lsb, int bits, int value);
 int _bit_toggle (unsigned int data, int bit);
 int _bit_on (unsigned int data, int bit);
 int _bit_off (unsigned int data, int bit);
@@ -57,14 +57,19 @@ int _bit_get (const unsigned int data, int msb, const int lsb){
     return (data & (int)pow(MULT, msb)-1) >> lsb;
 }
 
-int _bit_set (unsigned int data, int lsb, int value){
+int _bit_set (unsigned int data, int lsb, int bits, int value){
 
     __check_value(value);
 
     unsigned int value_bits = _bit_count(value, 0);
+
+    if (value_bits != bits){
+        value_bits = bits;
+    }
+
     unsigned int mask = ((int)pow(MULT, value_bits) - 1) << lsb;
     
-    data = (data & (~mask)) | (value << lsb);
+    data = (data & ~(mask)) | (value << lsb);
 
     return data;
 }
@@ -121,9 +126,10 @@ _bit_get (data, msb, lsb)
 	int	lsb
 
 int
-_bit_set (data, lsb, value)
+_bit_set (data, lsb, bits, value)
     int data
     int lsb
+    int bits
     int value
 
 int

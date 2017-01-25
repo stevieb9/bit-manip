@@ -2,7 +2,7 @@ use warnings;
 use strict;
 use feature 'say';
 
-use Bit::Manip qw(:all);
+use Bit::Manip::PP qw(:all);
 
 my $data = bit_on(0, 15);
 
