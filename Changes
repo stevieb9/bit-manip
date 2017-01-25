@@ -1,6 +1,6 @@
 Revision history for Bit-Manip
 
-0.02 UNREL
+0.02    2017-01-25
         - added in EXPORT_OK POD section
         - code tidying in the XS file
         - changed all instances of "first" to msb and "last" to lsb for
