@@ -1,6 +1,5 @@
 use warnings;
 use strict;
-use feature 'say';
 
 use Bit::Manip qw(:all);
 use Test::More;

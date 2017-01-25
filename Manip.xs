@@ -2,6 +2,7 @@
 #include "perl.h"
 #include "XSUB.h"
 
+#include <string.h>
 #include <stdio.h>
 #include <stdint.h>
 
@@ -12,6 +13,9 @@
 int  _bit_count (unsigned int value, int set);
 int  _bit_get (const unsigned int data, int first, const int last);
 int  _bit_set (unsigned int data, int lsb, int value);
+int  _bit_toggle (unsigned int data, int bit);
+int  _bit_on (unsigned int data, int bit);
+int  _bit_off (unsigned int data, int bit);
 
 void  __check_first(int first);
 void __check_last(int first, int last);
@@ -61,6 +65,18 @@ int _bit_set (unsigned int data, int lsb, int value){
     return data;
 }
 
+int _bit_toggle(unsigned int data, int bit){
+    return data ^= 1 << bit;
+}
+
+int _bit_on(unsigned int data, int bit){
+    return data |= 1 << bit;
+}
+
+int _bit_off(unsigned int data, int bit){
+    return data &= ~(1 << bit);
+}
+
 void __check_first (int first){
     if (first < 0)
         croak("\nbit_get() $first param must be greater than zero\n\n");
@@ -100,3 +116,18 @@ _bit_set (data, first, value)
     int data
     int first
     int value
+
+int
+_bit_toggle (data, bit)
+    int data
+    int bit
+
+int
+_bit_on (data, bit)
+    int data
+    int bit
+
+int
+_bit_off (data, bit)
+    int data
+    int bit
