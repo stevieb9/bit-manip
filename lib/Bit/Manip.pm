@@ -75,6 +75,10 @@ __END__
 
 Bit::Manip - Functions to simplify bit string manipulation
 
+=for html
+<a href="http://travis-ci.org/stevieb9/bit-manip"><img src="https://secure.travis-ci.org/stevieb9/bit-manip.png"/>
+<a href='https://coveralls.io/github/stevieb9/bit-manip?branch=master'><img src='https://coveralls.io/repos/stevieb9/bit-manip/badge.svg?branch=master&service=github' alt='Coverage Status' /></a>
+
 =head1 SYNOPSIS
 
     use Bit::Manip qw(:all);
