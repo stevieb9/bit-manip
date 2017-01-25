@@ -1,5 +1,8 @@
 Revision history for Bit-Manip
 
+1.00 UNREL
+        - removed string.h include as we don't use it
+
 0.02    2017-01-25
         - added in EXPORT_OK POD section
         - code tidying in the XS file

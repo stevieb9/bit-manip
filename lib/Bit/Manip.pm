@@ -118,7 +118,7 @@ Currently, up to 32-bit integers are supported.
 
 =head1 EXPORT_OK
 
-Use the C<:all> tag (eg: use Bit::Manip qw(:all);) to import the following
+Use the C<:all> tag (eg: C<use Bit::Manip qw(:all);>) to import the following
 functions into your namespace, or pick and choose individually:
 
     bit_bin
