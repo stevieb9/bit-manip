@@ -1,6 +1,6 @@
 Revision history for Bit-Manip
 
-1.00 UNREL
+1.00    2016-01-25
         - removed string.h include as we don't use it
         - LSB can now be equal to MSB to allow getting a single bit
         - fix issue where bit_set() was not updating bits if a leading zero was

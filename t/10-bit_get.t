@@ -45,7 +45,6 @@ use Test::More;
      # lsb == msb
 
     $ok = eval { bit_get($d, 8, 8); 1; };
-    is $ok, undef, "lsb == msb dies ok";
-    like $@, qr/\$lsb param/, "...with ok error";
+    is $ok, 1, "lsb == msb dies ok";
 }
 done_testing();
