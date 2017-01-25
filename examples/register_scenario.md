@@ -34,7 +34,6 @@ to configure and read from. Here's the bit configuration
     10-8:   Unused (Don't care bits)
 
     7-0:    Data
-            Doesn't matter for this example
 
 Let's start out with a 16-bit word, and set the start bit. Normally, we'd pass
 in an actual value as the first param (`$data`), but we'll just set bit `15`
@@ -89,13 +88,11 @@ Now we realize that we made a mistake above. We don't want both channels after
 all, we want to use only channel 1 (value: 0b01). Since we know exactly which
 bit we need to disable (14), we can just turn it off:
 
-    # using bit_set() to set a block of bits
-
     $data = bit_off($data, 14);
 
     # result: 1010100010111010
 
-(You could also use `bit_set()`` to reset the entire channel register bits
+(You could also use `bit_set()` to reset the entire channel register bits
 (14-13) like we did above).
 
 Let's verify that we've got the register configured correctly before we send it
@@ -112,7 +109,7 @@ So yep, our start bit is set. Let's verify the rest:
 
     # data
 
-    # (note no MSB param. We're reading from bit 7 through to 0)
+    # (note no LSB param. We're reading from bit 7 through to 0)
     # since we readily know the data value in decimal (186), we don't need
     # to worry about the binary representation
 
