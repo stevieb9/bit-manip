@@ -1,3 +1,4 @@
+.travis.yml-norun
 Changes
 lib/Bit/Manip.pm
 Makefile.PL
