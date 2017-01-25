@@ -10,14 +10,14 @@
 
 // declarations
 
-int  _bit_count (unsigned int value, int set);
-int  _bit_get (const unsigned int data, int first, const int last);
-int  _bit_set (unsigned int data, int lsb, int value);
-int  _bit_toggle (unsigned int data, int bit);
-int  _bit_on (unsigned int data, int bit);
-int  _bit_off (unsigned int data, int bit);
+int _bit_count (unsigned int value, int set);
+int _bit_get (const unsigned int data, int first, const int last);
+int _bit_set (unsigned int data, int lsb, int value);
+int _bit_toggle (unsigned int data, int bit);
+int _bit_on (unsigned int data, int bit);
+int _bit_off (unsigned int data, int bit);
 
-void  __check_first(int first);
+void __check_first(int first);
 void __check_last(int first, int last);
 void __check_value(int value);
 

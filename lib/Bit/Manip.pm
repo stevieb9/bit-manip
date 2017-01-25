@@ -3,7 +3,7 @@ package Bit::Manip;
 use warnings;
 use strict;
 
-our $VERSION = '0.01';
+our $VERSION = '0.02';
 
 require XSLoader;
 XSLoader::load('Bit::Manip', $VERSION);
@@ -89,7 +89,7 @@ Bit::Manip - Routines to simplify bit string manipulation
 
     $b = 0b00111000; (56)
 
-    print bit_get($b, 4, 3);
+    print bit_get($b, 4, 3); # 3
 
     # set a range of bits...
     # let's set bits 4-2 to binary 101
@@ -98,8 +98,8 @@ Bit::Manip - Routines to simplify bit string manipulation
 
     $b = bit_set($b, 2, 0b101); # 10010100
 
-    my $bin_str = bit_bin($b);
-
+    print bit_bin(255); # 11111111 (same as printf("%b", 255);)
+      
 =head1 DESCRIPTION
 
 Provides functions to aid in bit manipulation (set, unset, toggle, shifting)
@@ -107,6 +107,18 @@ etc. Particularly useful for embedded programming and writing device
 communication software.
 
 =head1 EXPORT_OK
+
+Use the C<:all> tag (eg: use Bit::Manip qw(:all);) to import the following
+functions into your namespace, or pick and choose individually:
+
+    bit_bin
+    bit_count 
+    bit_get 
+    bit_set 
+    bit_toggle
+    bit_on
+    bit_off
+    bit_merge
 
 =head1 FUNCTIONS
 
@@ -276,3 +288,4 @@ under the terms of either: the GNU General Public License as published
 by the Free Software Foundation; or the Artistic License.
 
 See L<http://dev.perl.org/licenses/> for more information.
+

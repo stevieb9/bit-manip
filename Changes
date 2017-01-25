@@ -1,5 +1,9 @@
 Revision history for Bit-Manip
 
-0.01    Date/time
+0.02 UNREL
+        - added in EXPORT_OK POD section
+        - code tidying in the XS file
+
+0.01    2017-01-24
         First version, released on an unsuspecting world.
 
