@@ -3,7 +3,7 @@ package Bit::Manip;
 use warnings;
 use strict;
 
-our $VERSION = '1.00';
+our $VERSION = '1.01';
 
 require XSLoader;
 XSLoader::load('Bit::Manip', $VERSION);
