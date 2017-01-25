@@ -13,12 +13,12 @@ use Exporter qw(import);
 our @EXPORT_OK = qw(
     bit_bin
     bit_count 
+    bit_mask
     bit_get 
     bit_set 
     bit_toggle
     bit_on
     bit_off
-    bit_merge
 );
 
 our %EXPORT_TAGS;
@@ -39,12 +39,16 @@ sub bit_count {
 
     return _bit_count($n, $set);
 }
+sub bit_mask {
+    my ($bits, $lsb) = @_;
+    return _bit_mask($bits, $lsb);
+}
 sub bit_get {
-    my ($data, $first, $last) = @_;
+    my ($data, $msb, $lsb) = @_;
 
-    $last = 0 if ! defined $last;
+    $lsb = 0 if ! defined $lsb;
 
-    _bit_get($data, $first, $last);
+    _bit_get($data, $msb, $lsb);
 }
 sub bit_set {
     my ($data, $lsb, $value) = @_;
@@ -69,7 +73,7 @@ __END__
 
 =head1 NAME
 
-Bit::Manip - Routines to simplify bit string manipulation
+Bit::Manip - Functions to simplify bit string manipulation
 
 =head1 SYNOPSIS
 
@@ -98,6 +102,10 @@ Bit::Manip - Routines to simplify bit string manipulation
 
     $b = bit_set($b, 2, 0b101); # 10010100
 
+    my ($num_bits, $lsb) = (3, 2);
+
+    print bit_mask($num_bits, $lsb); # 28, or 11100
+
     print bit_bin(255); # 11111111 (same as printf("%b", 255);)
       
 =head1 DESCRIPTION
@@ -106,6 +114,8 @@ Provides functions to aid in bit manipulation (set, unset, toggle, shifting)
 etc. Particularly useful for embedded programming and writing device
 communication software.
 
+Currently, up to 32-bit integers are supported.
+
 =head1 EXPORT_OK
 
 Use the C<:all> tag (eg: use Bit::Manip qw(:all);) to import the following
@@ -113,12 +123,12 @@ functions into your namespace, or pick and choose individually:
 
     bit_bin
     bit_count 
+    bit_mask
     bit_get 
     bit_set 
     bit_toggle
     bit_on
     bit_off
-    bit_merge
 
 =head1 FUNCTIONS
 
@@ -166,19 +176,19 @@ Parameters:
 Mandatory: Integer, the bit string you want to send in. Eg: C<255> for
 C<11111111> (or C<0xFF>).
 
-    $first
+    $msb
 
 Mandatory: Integer, the Most Significant Bit (leftmost) of the group of bits to
 collect the value for (starting from 0 from the right, so with C<1000>, so you'd
 send in C<3> as the start parameter for the bit set to C<1>). Must be C<1>
 
-    $last
+    $lsb
 
 Optional: Integer, the Least Significant Bit (rightmost) of the group of bits to
 collect the value for (starting at 0 from the right). A value of C<0> means
-return the value from C<$first> through to the very end of the bit string. A
-value of C<1> will capture from C<$first> through to bit C<1> (second from
-right). This value must be lower than C<$first>.
+return the value from C<$msb> through to the very end of the bit string. A
+value of C<1> will capture from C<$msb> through to bit C<1> (second from
+right). This value must be lower than C<$msb>.
 
 Return: Integer, the modified C<$data> param.
 
@@ -274,6 +284,22 @@ Mandatory: Integer, the bit number counting from the right-most (LSB) bit
 starting from C<0>.
 
 Return: Integer, the modified C<$data> param.
+
+=head2 bit_mask
+
+Generates a bit mask for the specific bits you specify.
+
+Parameters:
+
+    $bits
+
+Mandatory: Integer, the number of bits to get the mask for.
+
+    $lsb
+
+Mandatory: Integer, the LSB at which you plan on implementing your change.
+
+Return: Integer, the bit mask ready to be applied.
 
 =head1 AUTHOR
 

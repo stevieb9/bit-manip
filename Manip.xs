@@ -11,15 +11,16 @@
 // declarations
 
 int _bit_count (unsigned int value, int set);
-int _bit_get (const unsigned int data, int first, const int last);
+int _bit_mask (unsigned int bits, int lsb);
+int _bit_get (const unsigned int data, int msb, const int lsb);
 int _bit_set (unsigned int data, int lsb, int value);
 int _bit_toggle (unsigned int data, int bit);
 int _bit_on (unsigned int data, int bit);
 int _bit_off (unsigned int data, int bit);
 
-void __check_first(int first);
-void __check_last(int first, int last);
-void __check_value(int value);
+void __check_msb (int msb);
+void __check_lsb (int msb, int lsb);
+void __check_value (int value);
 
 // definitions
 
@@ -43,22 +44,26 @@ int _bit_count (unsigned int value, int set){
     return bit_count;
 }
 
-int _bit_get (const unsigned int data, int first, const int last){
+int _bit_mask (unsigned int bits, int lsb){
+    return ((int)pow(MULT, bits) - 1) << lsb;
+}
 
-    __check_first(first);
-    first++; // we count from 1
+int _bit_get (const unsigned int data, int msb, const int lsb){
 
-    __check_last(first, last);
+    __check_msb(msb);
+    msb++; // we count from 1
 
-    return (data & (int)pow(MULT, first)-1) >> last;
+    __check_lsb(msb, lsb);
+
+    return (data & (int)pow(MULT, msb)-1) >> lsb;
 }
 
 int _bit_set (unsigned int data, int lsb, int value){
 
     __check_value(value);
 
-    unsigned int shift_bits = _bit_count(value, 0);
-    unsigned int mask = ((int)pow(MULT, shift_bits) - 1) << lsb;
+    unsigned int value_bits = _bit_count(value, 0);
+    unsigned int mask = ((int)pow(MULT, value_bits) - 1) << lsb;
     
     data = (data & (~mask)) | (value << lsb);
 
@@ -77,17 +82,17 @@ int _bit_off(unsigned int data, int bit){
     return data &= ~(1 << bit);
 }
 
-void __check_first (int first){
-    if (first < 0)
-        croak("\nbit_get() $first param must be greater than zero\n\n");
+void __check_msb (int msb){
+    if (msb < 0)
+        croak("\nbit_get() $msb param must be greater than zero\n\n");
 }
 
-void __check_last (int first, int last){
-    if (last < 0)
-        croak("\nbit_get() $last param can not be negative\n\n");
+void __check_lsb (int msb, int lsb){
+    if (lsb < 0)
+        croak("\nbit_get() $lsb param can not be negative\n\n");
 
-    if (last + 1 >= (first))
-        croak("\nbit_get() $last param must be less than $first\n\n");
+    if (lsb + 1 >= (msb))
+        croak("\nbit_get() $lsb param must be less than $msb\n\n");
 }
 
 void __check_value (int value){
@@ -106,15 +111,20 @@ _bit_count (value, set)
     int set
 
 int
-_bit_get (data, first, last)
-	int data
-	int	first
-	int	last
+_bit_mask (bits, lsb)
+	int bits
+	int	lsb
 
 int
-_bit_set (data, first, value)
+_bit_get (data, msb, lsb)
+	int data
+	int	msb
+	int	lsb
+
+int
+_bit_set (data, lsb, value)
     int data
-    int first
+    int lsb
     int value
 
 int

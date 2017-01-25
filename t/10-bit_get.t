@@ -24,28 +24,28 @@ use Test::More;
     my $d = 0xFF;
     my $ok;
 
-    # first == -1
+    # msb == -1
 
     $ok = eval { bit_get($d, -1); 1; };
-    is $ok, undef, "first param -1 dies ok";
-    like $@, qr/\$first param/, "...with ok error";
+    is $ok, undef, "msb param -1 dies ok";
+    like $@, qr/\$msb param/, "...with ok error";
 
-    # last == -1
+    # lsb == -1
 
     $ok = eval { bit_get($d, 16, -1); 1; };
-    is $ok, undef, "last param -1 dies ok";
-    like $@, qr/\$last param/, "...with ok error";
+    is $ok, undef, "lsb param -1 dies ok";
+    like $@, qr/\$lsb param/, "...with ok error";
 
-    # last < first
+    # lsb < msb
 
     $ok = eval { bit_get($d, 8, 9); 1; };
-    is $ok, undef, "last < first dies ok";
-    like $@, qr/\$last param/, "...with ok error";
+    is $ok, undef, "lsb < msb dies ok";
+    like $@, qr/\$lsb param/, "...with ok error";
 
-     # last == first
+     # lsb == msb
 
     $ok = eval { bit_get($d, 8, 8); 1; };
-    is $ok, undef, "last == first dies ok";
-    like $@, qr/\$last param/, "...with ok error";
+    is $ok, undef, "lsb == msb dies ok";
+    like $@, qr/\$lsb param/, "...with ok error";
 }
 done_testing();
