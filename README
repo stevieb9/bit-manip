@@ -24,8 +24,9 @@ SYNOPSIS
         # let's set bits 4-2 to binary 101
 
         $b = 0b10000000;
+        my $num_bits = 3; # 0b101 in the call is 3 bits
 
-        $b = bit_set($b, 2, 0b101); # 10010100
+        $b = bit_set($b, 2, $num_bits, 0b101); # 10010100
 
         my ($num_bits, $lsb) = (3, 2);
 
@@ -41,7 +42,7 @@ DESCRIPTION
     Currently, up to 32-bit integers are supported.
 
 EXPORT_OK
-    Use the `:all' tag (eg: use Bit::Manip qw(:all);) to import the
+    Use the `:all' tag (eg: `use Bit::Manip qw(:all);') to import the
     following functions into your namespace, or pick and choose
     individually:
 
@@ -129,6 +130,12 @@ FUNCTIONS
     range you want to manipulate. For example, if you wanted to set a new
     value for bits `7-5', you'd send in `5'.
 
+        $bits
+
+    Mandatory: Integer, the number of bits you're sending in. We need this
+    param in the event your leading bit is a zero. For example, if you're
+    sending in `0b111' or `0b001', this param would be `3'.
+
         $value
 
     Mandatory: Integer, the value that you want to change the specified bits
@@ -152,7 +159,7 @@ FUNCTIONS
 
     Code:
 
-        my $x = bit_set($data, 4, 0b111); # (0x07, or 7)
+        my $x = bit_set($data, 4, 3, 0b111); # (0x07, or 7)
         printf("%b\n", $x); # prints 11110000
 
   bit_toggle

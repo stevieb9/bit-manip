@@ -99,8 +99,9 @@ Bit::Manip - Functions to simplify bit string manipulation
     # let's set bits 4-2 to binary 101
 
     $b = 0b10000000;
+    my $num_bits = 3; # 0b101 in the call is 3 bits
 
-    $b = bit_set($b, 2, 0b101); # 10010100
+    $b = bit_set($b, 2, $num_bits, 0b101); # 10010100
 
     my ($num_bits, $lsb) = (3, 2);
 
@@ -208,6 +209,12 @@ Mandatory: Integer, the least significant bit (rightmost) in the bit range you
 want to manipulate. For example, if you wanted to set a new value for bits
 C<7-5>, you'd send in C<5>.
 
+    $bits
+
+Mandatory: Integer, the number of bits you're sending in. We need this param
+in the event your leading bit is a zero. For example, if you're sending in
+C<0b111> or C<0b001>, this param would be C<3>.
+
     $value
 
 Mandatory: Integer, the value that you want to change the specified bits to.
@@ -231,7 +238,7 @@ C<6-4> to C<111> in binary (always start from bit 0, not 1):
 
 Code:
 
-    my $x = bit_set($data, 4, 0b111); # (0x07, or 7)
+    my $x = bit_set($data, 4, 3, 0b111); # (0x07, or 7)
     printf("%b\n", $x); # prints 11110000
 
 =head2 bit_toggle

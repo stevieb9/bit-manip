@@ -1,5 +1,8 @@
 Revision history for Bit-Manip
 
+1.01    2016-01-25
+        - somehow I missed adding POD for the changes in bit_set()
+
 1.00    2016-01-25
         - removed string.h include as we don't use it
         - LSB can now be equal to MSB to allow getting a single bit
