@@ -74,8 +74,6 @@ $x = bit_set(128, 5, 1);
 printf("%d: %b\n", $x, $x);
 
 
-say "bit 2";
-
 $x = bit_set(128, 2, 0);
 printf("%d: %b\n", $x, $x);
 
@@ -87,8 +85,6 @@ printf("%d: %b\n", $x, $x);
 
 $x = bit_set(128, 2, 3);
 printf("%d: %b\n", $x, $x);
-
-say "bit 3";
 
 $x = bit_set(128, 3, 0b11);
 printf("%d: %b\n", $x, $x);

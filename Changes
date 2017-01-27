@@ -1,5 +1,9 @@
 Revision history for Bit-Manip
 
+1.02    2016-01-27
+        - removed erroneous "use feature 'say';" from test files, as it was
+          causing Testers to break on versions < v5.10.x
+
 1.01    2016-01-25
         - somehow I missed adding POD for the changes in bit_set()
 
