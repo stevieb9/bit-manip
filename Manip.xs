@@ -13,6 +13,7 @@ int _bit_count (unsigned int value, int set);
 int _bit_mask (unsigned int bits, int lsb);
 int _bit_get (const unsigned int data, int msb, const int lsb);
 int _bit_set (unsigned int data, int lsb, int bits, int value);
+int _bit_set_seq (unsigned int data, unsigned char* seq, int lsb, int msb, int val);
 int _bit_toggle (unsigned int data, int bit);
 int _bit_on (unsigned int data, int bit);
 int _bit_off (unsigned int data, int bit);
@@ -74,6 +75,51 @@ int _bit_set (unsigned int data, int lsb, int bits, int value){
     return data;
 }
 
+int _bit_set_seq (unsigned int data, unsigned char* seq, int lsb, int msb, int val){
+
+    unsigned char nbits = (msb - lsb);
+
+    data = _bit_set(data, lsb, nbits, val);
+
+    unsigned int sequenced = data;
+
+    int i;
+
+    for (i=0; i<nbits; i++){
+        int o = _bit_get(data, i, i);
+        int s = _bit_get(data, seq[i], seq[i]);
+
+        if (o != s){
+            sequenced = _bit_set(sequenced, i, 1, s);
+        }
+    }
+
+    return sequenced;
+}
+
+/*
+sub bit_set_seq {
+    my ($b, $seq, $val) = @_;
+
+    my $lsb = (sort @$seq)[0];
+    my $msb = (sort @$seq)[-1];
+
+    my $nbits = ($msb - $lsb);
+
+    $b = bit_set($b, $lsb, $nbits, $val);
+
+    my $x = $b;
+
+    for (0..$nbits){
+        my $o = bit_get($b, $_, $_);
+        my $s = bit_get($b, $seq->[$_], $seq->[$_]);
+
+        if ($o != $s){
+            $x = bit_set($x, $_, 1, $s);
+        }
+    }
+}
+*/
 int _bit_toggle(unsigned int data, int bit){
     return data ^= 1 << bit;
 }
@@ -131,6 +177,14 @@ _bit_set (data, lsb, bits, value)
     int lsb
     int bits
     int value
+
+int
+_bit_set_seq (data, seq, lsb, msb, val)
+    int data
+    char* seq
+    int lsb
+    int msb
+    int val
 
 int
 _bit_toggle (data, bit)

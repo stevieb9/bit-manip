@@ -16,6 +16,7 @@ our @EXPORT_OK = qw(
     bit_mask
     bit_get 
     bit_set
+    bit_set_seq
     bit_clr
     bit_toggle
     bit_on
@@ -58,6 +59,16 @@ sub bit_clr {
 sub bit_set {
     my ($data, $lsb, $nbits, $value) = @_;
     return _bit_set($data, $lsb, $nbits, $value);
+}
+sub bit_set_seq {
+    my ($data, $seq, $value) = @_;
+
+    my $lsb = (sort @$seq)[0];
+    my $msb = (sort @$seq)[-1];
+
+    my $byte_chars = pack('V0C*', @$seq);
+
+    return _bit_set_seq($data, $byte_chars, $lsb, $msb, $value);
 }
 sub bit_toggle {
     my ($data, $bit) = @_;
@@ -142,6 +153,7 @@ functions into your namespace, or pick and choose individually:
     bit_mask
     bit_get 
     bit_set
+    bit_set_seq
     bit_clr
     bit_toggle
     bit_on
