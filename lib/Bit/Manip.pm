@@ -120,14 +120,13 @@ Bit::Manip - Functions to simplify bit string manipulation
     # helpers
 
     my ($num_bits, $lsb) = (3, 2);
-
     print bit_mask($num_bits, $lsb); # 28, or 11100
 
     print bit_bin(255); # 11111111 (same as printf("%b", 255);)
       
 =head1 DESCRIPTION
 
-Provides functions to aid in bit manipulation (set, unset, toggle, shifting)
+Provides functions to aid in bit manipulation (get, set, clear, toggle)
 etc. Particularly useful for embedded programming and writing device
 communication software.
 
@@ -142,7 +141,8 @@ functions into your namespace, or pick and choose individually:
     bit_count 
     bit_mask
     bit_get 
-    bit_set 
+    bit_set
+    bit_clr
     bit_toggle
     bit_on
     bit_off
@@ -299,7 +299,8 @@ Return: Integer, the modified C<$data> param.
 
 =head2 bit_on
 
-Sets a single bit (sets to C<1>), regardless of its current state.
+Sets a single bit (sets to C<1>), regardless of its current state. This is just
+a short form of setting a single bit with L<bit_set>.
 
 Parameters:
 
@@ -316,7 +317,8 @@ Return: Integer, the modified C<$data> param.
 
 =head2 bit_off
 
-Unsets a single bit (sets to C<0>), regardless of its current state.
+Unsets a single bit (sets to C<0>), regardless of its current state. This is
+just a short form of clearing a single bit with L<bit_set>.
 
 Parameters:
 
