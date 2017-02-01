@@ -15,7 +15,8 @@ our @EXPORT_OK = qw(
     bit_count 
     bit_mask
     bit_get 
-    bit_set 
+    bit_set
+    bit_clr
     bit_toggle
     bit_on
     bit_off
@@ -40,8 +41,8 @@ sub bit_count {
     return _bit_count($n, $set);
 }
 sub bit_mask {
-    my ($bits, $lsb) = @_;
-    return _bit_mask($bits, $lsb);
+    my ($nbits, $lsb) = @_;
+    return _bit_mask($nbits, $lsb);
 }
 sub bit_get {
     my ($data, $msb, $lsb) = @_;
@@ -50,9 +51,13 @@ sub bit_get {
 
     _bit_get($data, $msb, $lsb);
 }
+sub bit_clr {
+    my ($data, $lsb, $nbits) = @_;
+    return _bit_set($data, $lsb, $nbits, 0);
+}
 sub bit_set {
-    my ($data, $lsb, $bits, $value) = @_;
-    return _bit_set($data, $lsb, $bits, $value);
+    my ($data, $lsb, $nbits, $value) = @_;
+    return _bit_set($data, $lsb, $nbits, $value);
 }
 sub bit_toggle {
     my ($data, $bit) = @_;
@@ -60,11 +65,11 @@ sub bit_toggle {
 }
 sub bit_on {
     my ($data, $bit) = @_;
-    return _bit_toggle($data, $bit);
+    return _bit_on($data, $bit);
 }
 sub bit_off {
     my ($data, $bit) = @_;
-    return _bit_toggle($data, $bit);
+    return _bit_off($data, $bit);
 }
 sub _vim{};
 
@@ -102,6 +107,17 @@ Bit::Manip - Functions to simplify bit string manipulation
     my $num_bits = 3; # 0b101 in the call is 3 bits
 
     $b = bit_set($b, 2, $num_bits, 0b101); # 10010100
+
+    # clear some bits
+
+    $b = 0b11111111;
+
+    $num_bits = 3;
+    $lsb = 3;
+
+    $b = bit_clr($b, $lsb, $num_bits); # 11000111
+
+    # helpers
 
     my ($num_bits, $lsb) = (3, 2);
 
@@ -209,7 +225,7 @@ Mandatory: Integer, the least significant bit (rightmost) in the bit range you
 want to manipulate. For example, if you wanted to set a new value for bits
 C<7-5>, you'd send in C<5>.
 
-    $bits
+    $nbits
 
 Mandatory: Integer, the number of bits you're sending in. We need this param
 in the event your leading bit is a zero. For example, if you're sending in
@@ -240,6 +256,29 @@ Code:
 
     my $x = bit_set($data, 4, 3, 0b111); # (0x07, or 7)
     printf("%b\n", $x); # prints 11110000
+
+=head2 bit_clr
+
+Clear (unset to 0) specific bits in the bit string.
+
+Parameters:
+
+    $data
+
+Mandatory: Integer, the bit string you want to manipulate bits in.
+
+    $lsb
+
+Mandatory: Integer, the least significant bit (rightmost) in the bit range you
+want to manipulate. For example, if you wanted to clear bits C<7-5>, you'd send
+in C<5>.
+
+    $nbits
+
+Mandatory: Integer, the number of bits you're wanting to clear, starting from
+the C<$lsb> bit, and clearing the number of bits to the left.
+
+Returns the modified bit string.
 
 =head2 bit_toggle
 
@@ -298,7 +337,7 @@ Generates a bit mask for the specific bits you specify.
 
 Parameters:
 
-    $bits
+    $nbits
 
 Mandatory: Integer, the number of bits to get the mask for.
 

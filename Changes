@@ -1,5 +1,11 @@
 Revision history for Bit-Manip
 
+1.03    2017-02-01
+        - added bit_clr() (per PerlMonks discussion), clears selected bits
+        - changed $bits param name to $nbits in code and POD as it makes it less
+          ambiguous as to what we mean by the arg
+        - added t/45 for testing bit_clr()
+
 1.02    2016-01-27
         - removed erroneous "use feature 'say';" from test files, as it was
           causing Testers to break on versions < v5.10.x
