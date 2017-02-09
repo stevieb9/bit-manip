@@ -11,13 +11,12 @@ XSLoader::load('Bit::Manip', $VERSION);
 use Exporter qw(import);
 
 our @EXPORT_OK = qw(
-    bit_bin
-    bit_count 
-    bit_mask
-    bit_get 
+    bit_get
     bit_set
-    bit_set_seq
     bit_clr
+    bit_bin
+    bit_count
+    bit_mask
     bit_toggle
     bit_on
     bit_off
@@ -59,16 +58,6 @@ sub bit_clr {
 sub bit_set {
     my ($data, $lsb, $nbits, $value) = @_;
     return _bit_set($data, $lsb, $nbits, $value);
-}
-sub bit_set_seq {
-    my ($data, $seq, $value) = @_;
-
-    my $lsb = (sort @$seq)[0];
-    my $msb = (sort @$seq)[-1];
-
-    my $byte_chars = pack('V0C*', @$seq);
-
-    return _bit_set_seq($data, $byte_chars, $lsb, $msb, $value);
 }
 sub bit_toggle {
     my ($data, $bit) = @_;
@@ -148,51 +137,17 @@ Currently, up to 32-bit integers are supported.
 Use the C<:all> tag (eg: C<use Bit::Manip qw(:all);>) to import the following
 functions into your namespace, or pick and choose individually:
 
-    bit_bin
-    bit_count 
-    bit_mask
-    bit_get 
+    bit_get
     bit_set
-    bit_set_seq
     bit_clr
     bit_toggle
     bit_on
     bit_off
+    bit_bin
+    bit_count
+    bit_mask
 
 =head1 FUNCTIONS
-
-=head2 bit_bin
-
-Returns the binary representation of a number as a string of ones and zeroes.
-
-Parameters:
-
-    $data
-
-Mandatory: Integer, the number you want to convert.
-
-=head2 bit_count
-
-Returns either the total count of bits in a number, or just the number of set
-bits (if the C<$set>, parameter is sent in and is true).
-
-Parameters:
-
-    $num
-
-Mandatory: Unsigned integer, the number to retrieve the total number of bits
-for. For example, if you send in C<15>, the total number of bits would be C<4>,
-likewise, for C<255>, the number of bits would be C<16>.
-
-    $set
-
-Optional: Integer. If this is sent and is a true value, we'll return the number
-of *set* bits only. For example, for C<255>, the set bits will be C<8> (ie. all
-of them), and for C<8>, the return will be C<1> (as only the MSB is set out of
-all four of the total).
-
-Return: Integer, the number of bits that make up the number if C<$set> is C<0>,
-and the number of set bits (1's) if C<$set> is true.
 
 =head2 bit_get
 
@@ -344,6 +299,39 @@ Mandatory: Integer, the bit number counting from the right-most (LSB) bit
 starting from C<0>.
 
 Return: Integer, the modified C<$data> param.
+
+=head2 bit_bin
+
+Returns the binary representation of a number as a string of ones and zeroes.
+
+Parameters:
+
+    $data
+
+Mandatory: Integer, the number you want to convert.
+
+=head2 bit_count
+
+Returns either the total count of bits in a number, or just the number of set
+bits (if the C<$set>, parameter is sent in and is true).
+
+Parameters:
+
+    $num
+
+Mandatory: Unsigned integer, the number to retrieve the total number of bits
+for. For example, if you send in C<15>, the total number of bits would be C<4>,
+likewise, for C<255>, the number of bits would be C<16>.
+
+    $set
+
+Optional: Integer. If this is sent and is a true value, we'll return the number
+of *set* bits only. For example, for C<255>, the set bits will be C<8> (ie. all
+of them), and for C<8>, the return will be C<1> (as only the MSB is set out of
+all four of the total).
+
+Return: Integer, the number of bits that make up the number if C<$set> is C<0>,
+and the number of set bits (1's) if C<$set> is true.
 
 =head2 bit_mask
 
