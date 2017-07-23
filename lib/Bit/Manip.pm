@@ -17,6 +17,7 @@ our @EXPORT_OK = qw(
     bit_bin
     bit_count
     bit_mask
+    bit_tog
     bit_toggle
     bit_on
     bit_off
@@ -59,9 +60,14 @@ sub bit_set {
     my ($data, $lsb, $nbits, $value) = @_;
     return _bit_set($data, $lsb, $nbits, $value);
 }
-sub bit_toggle {
+
+# alias bit_toggle() into play
+
+*bit_toggle = \&bit_tog;
+
+sub bit_tog {
     my ($data, $bit) = @_;
-    return _bit_toggle($data, $bit);
+    return _bit_tog($data, $bit);
 }
 sub bit_on {
     my ($data, $bit) = @_;
@@ -87,8 +93,8 @@ Bit::Manip - Functions to simplify bit string manipulation
     my $b;    # bit string
     $b = 128; # 10000000
 
-    $b = bit_toggle($b, 4); # 10010000
-    $b = bit_toggle($b, 4); # 10000000
+    $b = bit_tog($b, 4); # 10010000
+    $b = bit_tog($b, 4); # 10000000
     
     $b = bit_off($b, 7);    # 0 
     $b = bit_on($b, 7);     # 10000000 
@@ -140,7 +146,7 @@ functions into your namespace, or pick and choose individually:
     bit_get
     bit_set
     bit_clr
-    bit_toggle
+    bit_tog
     bit_on
     bit_off
     bit_bin
@@ -248,6 +254,12 @@ the C<$lsb> bit, and clearing the number of bits to the left.
 Returns the modified bit string.
 
 =head2 bit_toggle
+
+See L</bit_tog>.
+
+=head2 bit_tog
+
+AKA: C<bit_toggle()>.
 
 Toggles a single bit. If it's C<0> it'll toggle to C<1> and vice-versa.
 

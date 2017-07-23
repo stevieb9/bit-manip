@@ -8,7 +8,7 @@ int _bit_count (unsigned int value, int set);
 int _bit_mask (unsigned int bits, int lsb);
 int _bit_get (const unsigned int data, int msb, const int lsb);
 int _bit_set (unsigned int data, int lsb, int bits, int value);
-int _bit_toggle (unsigned int data, int bit);
+int _bit_tog (unsigned int data, int bit);
 int _bit_on (unsigned int data, int bit);
 int _bit_off (unsigned int data, int bit);
 
@@ -69,7 +69,7 @@ int _bit_set (unsigned int data, int lsb, int bits, int value){
     return data;
 }
 
-int _bit_toggle(unsigned int data, int bit){
+int _bit_tog(unsigned int data, int bit){
     return data ^= 1 << bit;
 }
 
@@ -128,7 +128,7 @@ _bit_set (data, lsb, bits, value)
     int value
 
 int
-_bit_toggle (data, bit)
+_bit_tog (data, bit)
     int data
     int bit
 
