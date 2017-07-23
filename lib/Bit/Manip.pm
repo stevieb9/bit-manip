@@ -93,9 +93,13 @@ Bit::Manip - Functions to simplify bit string manipulation
     my $b;    # bit string
     $b = 128; # 10000000
 
+    # toggle a bit off and on
+
     $b = bit_tog($b, 4); # 10010000
     $b = bit_tog($b, 4); # 10000000
-    
+
+    # turn a bit off, then back on
+
     $b = bit_off($b, 7);    # 0 
     $b = bit_on($b, 7);     # 10000000 
 
@@ -155,7 +159,7 @@ functions into your namespace, or pick and choose individually:
 
 =head1 FUNCTIONS
 
-=head2 bit_get
+=head2 bit_get($data, $msb, $lsb)
 
 Retrieves the value of specified bits within a bit string.
 
@@ -182,7 +186,7 @@ right). This value must be lower than C<$msb>.
 
 Return: Integer, the modified C<$data> param.
 
-=head2 bit_set
+=head2 bit_set($data, $lsb, $nbits, $value)
 
 Allows you to set a value for specific bits in your bit string.
 
@@ -230,7 +234,7 @@ Code:
     my $x = bit_set($data, 4, 3, 0b111); # (0x07, or 7)
     printf("%b\n", $x); # prints 11110000
 
-=head2 bit_clr
+=head2 bit_clr($data, $lsb, $nbits)
 
 Clear (unset to 0) specific bits in the bit string.
 
@@ -253,11 +257,11 @@ the C<$lsb> bit, and clearing the number of bits to the left.
 
 Returns the modified bit string.
 
-=head2 bit_toggle
+=head2 bit_toggle($data, $bit)
 
 See L</bit_tog>.
 
-=head2 bit_tog
+=head2 bit_tog($data, $bit)
 
 AKA: C<bit_toggle()>.
 
@@ -276,7 +280,7 @@ starting from C<0>.
 
 Return: Integer, the modified C<$data> param.
 
-=head2 bit_on
+=head2 bit_on($data, $bit)
 
 Sets a single bit (sets to C<1>), regardless of its current state. This is just
 a short form of setting a single bit with L<bit_set>.
@@ -294,7 +298,7 @@ starting from C<0>.
 
 Return: Integer, the modified C<$data> param.
 
-=head2 bit_off
+=head2 bit_off($data, $bit)
 
 Unsets a single bit (sets to C<0>), regardless of its current state. This is
 just a short form of clearing a single bit with L<bit_set>.
@@ -312,7 +316,7 @@ starting from C<0>.
 
 Return: Integer, the modified C<$data> param.
 
-=head2 bit_bin
+=head2 bit_bin($data)
 
 Returns the binary representation of a number as a string of ones and zeroes.
 
@@ -322,7 +326,7 @@ Parameters:
 
 Mandatory: Integer, the number you want to convert.
 
-=head2 bit_count
+=head2 bit_count($num, $set)
 
 Returns either the total count of bits in a number, or just the number of set
 bits (if the C<$set>, parameter is sent in and is true).
@@ -345,7 +349,7 @@ all four of the total).
 Return: Integer, the number of bits that make up the number if C<$set> is C<0>,
 and the number of set bits (1's) if C<$set> is true.
 
-=head2 bit_mask
+=head2 bit_mask($nbits, $lsb)
 
 Generates a bit mask for the specific bits you specify.
 
