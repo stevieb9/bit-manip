@@ -3,9 +3,6 @@
 #include "XSUB.h"
 
 #include <stdio.h>
-#include <stdint.h>
-
-#define MULT 2
 
 // declarations
 
@@ -44,7 +41,7 @@ int _bit_count (unsigned int value, int set){
 }
 
 int _bit_mask (unsigned int bits, int lsb){
-    return ((int)pow(MULT, bits) - 1) << lsb;
+    return ((1 << bits) - 1) << lsb;
 }
 
 int _bit_get (const unsigned int data, int msb, const int lsb){
@@ -54,7 +51,7 @@ int _bit_get (const unsigned int data, int msb, const int lsb){
 
     __check_lsb(msb, lsb);
 
-    return (data & (int)pow(MULT, msb)-1) >> lsb;
+    return (data & ((1 << msb) -1)) >> lsb;
 }
 
 int _bit_set (unsigned int data, int lsb, int bits, int value){
@@ -67,8 +64,8 @@ int _bit_set (unsigned int data, int lsb, int bits, int value){
         value_bits = bits;
     }
 
-    unsigned int mask = ((int)pow(MULT, value_bits) - 1) << lsb;
-    
+    unsigned int mask = ((1 << value_bits) - 1) << lsb;
+
     data = (data & ~(mask)) | (value << lsb);
 
     return data;
