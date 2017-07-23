@@ -1,5 +1,8 @@
 Revision history for Bit-Manip
 
+1.05 UNREL
+        -
+
 1.04    2017-07-23
         - replaced all calls to pow() with bit shift operations instead,
           breaking reliance on stdint.h (closes #10)
