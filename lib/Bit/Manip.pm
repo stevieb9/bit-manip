@@ -143,6 +143,9 @@ communication software.
 
 Currently, up to 32-bit integers are supported.
 
+Note that if your machine isn't capable of compiling C code, there's a pure Perl
+version as well, aptly named L<Bit::Manip::PP>.
+
 =head1 EXPORT_OK
 
 Use the C<:all> tag (eg: C<use Bit::Manip qw(:all);>) to import the following

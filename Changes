@@ -7,6 +7,8 @@ Revision history for Bit-Manip
           compatibility purposes (closes #8)
         - add the parameter lists to the functions in POD (closes #9)
         - changed to the older way of using Exporter (closes #7)
+        - added note in DESCRIPTION that we also have a pure Perl version
+          (closes #6)
 
 1.03    2017-02-09
         - added bit_clr() (per PerlMonks discussion), clears selected bits
