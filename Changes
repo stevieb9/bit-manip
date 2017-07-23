@@ -6,6 +6,7 @@ Revision history for Bit-Manip
         - renamed bit_toggle() to bit_tog(), left an alias for backward
           compatibility purposes (closes #8)
         - add the parameter lists to the functions in POD (closes #9)
+        - changed to the older way of using Exporter (closes #7)
 
 1.03    2017-02-09
         - added bit_clr() (per PerlMonks discussion), clears selected bits

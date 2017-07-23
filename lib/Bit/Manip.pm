@@ -8,7 +8,8 @@ our $VERSION = '1.04';
 require XSLoader;
 XSLoader::load('Bit::Manip', $VERSION);
 
-use Exporter qw(import);
+use Exporter;
+our @ISA = qw(Exporter);
 
 our @EXPORT_OK = qw(
     bit_get
