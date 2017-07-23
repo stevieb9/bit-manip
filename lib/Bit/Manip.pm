@@ -186,7 +186,7 @@ Optional: Integer, the Least Significant Bit (rightmost) of the group of bits to
 collect the value for (starting at 0 from the right). A value of C<0> means
 return the value from C<$msb> through to the very end of the bit string. A
 value of C<1> will capture from C<$msb> through to bit C<1> (second from
-right). This value must be lower than C<$msb>.
+right). If C<$msb> is equal to C<$lsb>, we'll return just that bit.
 
 Return: Integer, the modified C<$data> param.
 

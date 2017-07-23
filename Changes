@@ -9,6 +9,8 @@ Revision history for Bit-Manip
         - changed to the older way of using Exporter (closes #7)
         - added note in DESCRIPTION that we also have a pure Perl version
           (closes #6)
+        - verified $msb can equal $lsb in bit_get(), and added tests to ensure
+          it (closes #2)
 
 1.03    2017-02-09
         - added bit_clr() (per PerlMonks discussion), clears selected bits
